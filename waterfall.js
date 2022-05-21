@@ -12,6 +12,7 @@ class Waterfall {
     this.hideItems();
     this.addStyles();
     this.render();
+    this.setBrowserVisibilityParams();
     this.addListeners();
   }
 
@@ -33,12 +34,10 @@ class Waterfall {
     document.body.insertAdjacentElement("beforeend", style);
   }
 
-  render = () => {
-    this.sortItems();
+  render = () => {    
     this.removeCols();
     this.addCols();
     this.spreadItems();
-    this.setBrowserVisibilityParams();
   };
 
   sortItems() {
@@ -134,7 +133,7 @@ class Waterfall {
 }
 
 window.waterfall = (selector, minWidth, styles) => {
-  document.addEventListener("DOMContentLoaded", () => {
+  window.addEventListener("load", () => {
     const el = document.querySelector(selector);
     new Waterfall(el, minWidth, styles);
   });
