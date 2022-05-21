@@ -34,9 +34,11 @@ class Waterfall {
   }
 
   render = () => {
+    this.sortItems();
     this.removeCols();
     this.addCols();
     this.spreadItems();
+    this.setBrowserVisibilityParams();
   };
 
   sortItems() {
@@ -102,12 +104,32 @@ class Waterfall {
     return this.cols[smallest.index];
   }
 
+  setBrowserVisibilityParams() {
+    let hidden, visibilityChange;
+    if (typeof document.hidden !== "undefined") {
+      // Opera 12.10 and Firefox 18 and later support
+      hidden = "hidden";
+      visibilityChange = "visibilitychange";
+    } else if (typeof document.msHidden !== "undefined") {
+      hidden = "msHidden";
+      visibilityChange = "msvisibilitychange";
+    } else if (typeof document.webkitHidden !== "undefined") {
+      hidden = "webkitHidden";
+      visibilityChange = "webkitvisibilitychange";
+    }
+
+    this.hidden = hidden;
+    this.visibilityChange = visibilityChange;
+  }
+
   addListeners() {
     window.addEventListener("resize", this.render);
+    document.addEventListener(this.visibilityChange, this.render);
   }
 
   remove() {
     window.removeEventListener("resize", this.render);
+    document.removeEventListener(this.visibilityChange, this.render);
   }
 }
 
