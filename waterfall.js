@@ -8,6 +8,7 @@ class Waterfall {
   }
 
   init() {
+    this.sortItems();
     this.hideItems();
     this.addStyles();
     this.render();
@@ -36,10 +37,16 @@ class Waterfall {
     this.removeCols();
     this.addCols();
     this.spreadItems();
+  };
+
+  sortItems() {
+    this.items.sort((a, b) => {
+      return a.offsetHeight - b.offsetHeight > 0 ? -1 : 1;
+    });
   }
 
   hideItems() {
-    this.items.forEach(item => item.remove());
+    this.items.forEach((item) => item.remove());
   }
 
   removeCols() {
@@ -49,7 +56,7 @@ class Waterfall {
   }
 
   addCols() {
-    const screenWidth = window.innerWidth;
+    const screenWidth = document.body.clientWidth;
     const cols = Math.ceil(screenWidth / this.minWidth);
 
     for (let i = 0; i < cols; i++) {
@@ -69,7 +76,7 @@ class Waterfall {
   spreadItems() {
     this.items.forEach((item) => {
       const col = this.findSmallestCol();
-      col.insertAdjacentElement('beforeend', item);
+      col.insertAdjacentElement("beforeend", item);
     });
   }
 
@@ -96,11 +103,11 @@ class Waterfall {
   }
 
   addListeners() {
-    window.addEventListener('resize', this.render);
+    window.addEventListener("resize", this.render);
   }
 
   remove() {
-    window.removeEventListener('resize', this.render);
+    window.removeEventListener("resize", this.render);
   }
 }
 
