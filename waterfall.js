@@ -17,7 +17,7 @@ class Waterfall {
   }
 
   addStyles() {
-    this.box.classList.add(".waterfall__container");
+    this.box.classList.add("waterfall__container");
     const style = document.createElement("style");
     style.innerHTML = `
       .waterfall__container {
